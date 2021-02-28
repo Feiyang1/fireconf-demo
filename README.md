@@ -14,3 +14,4 @@ Firebase web app, created for Firebase Summit 2019.
 - Upgrade to compat packages branch
 - Upgrade to exp packages branch
 - firestore lite branch
+- ~~Realtime updates~~

@@ -1,4 +1,5 @@
 import firebase from "firebase/app"; // Firebase core
+import 'firebase/auth';
 import "firebase/firestore";
 import "firebase/performance";
 import { firebaseConfigFullSplit as firebaseConfig } from "./shared/firebase-config";
@@ -18,13 +19,6 @@ subscribeToFirestore((stockData) => renderPage({
   title: "Importing Firestore and Perf Only",
   tableData: stockData
 }));
-
-
-
-
-
-
-
 
 /**
  * FUNCTIONS
