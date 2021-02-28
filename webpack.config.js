@@ -91,9 +91,8 @@ function getConfig(appName, template) {
 }
 
 module.exports = [
-  getConfig("full"),
-  getConfig("split"),
-  getConfig("dynamic"),
+  // getConfig("split"),
+  // getConfig("dynamic"),
   getConfig("full-split", /* CHANGE WHEN UPDATING VERSION */ "split"),
-  getConfig("full-split-dynamic", /* CHANGE WHEN UPDATING VERSION */ "dynamic")
+  // getConfig("full-split-dynamic", /* CHANGE WHEN UPDATING VERSION */ "dynamic")
 ];

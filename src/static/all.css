@@ -136,10 +136,24 @@ html, body {
 
 .positive {
 	color: green;
+	animation: fadeGreen 1s ease-in-out;
+}
+
+@keyframes fadeGreen {
+	0%   { background-color: #FFFFFF; }
+	50%  { background-color: rgba(63, 191, 63, 0.5); }
+	100% { background-color: #FFFFFF; }
 }
 
 .negative {
 	color: red;
+	animation: fadeRed 1s ease-in-out;
+}
+
+@keyframes fadeRed {
+	0%   { background-color: #FFFFFF; }
+	50%  { background-color: rgba(218, 41, 41, 0.5); }
+	100% { background-color: #FFFFFF; }
 }
 
 .header-cell {
