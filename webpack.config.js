@@ -42,5 +42,6 @@ module.exports = {
   },
   plugins: [new CopyPlugin([
       { from: `./src/new/index.html`, to: `./index.html` },
+      { from: `./src/static/all.css`, to: `./all.css` },
   ])]
 };

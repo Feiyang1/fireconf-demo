@@ -95,6 +95,7 @@ html, body {
 .home {
 	padding: 56px 20px;
 	min-height: 100%;
+	min-width: 670px;
 	background-color: #def2f1;
 }
 
@@ -106,6 +107,12 @@ html, body {
 	font-weight: normal;
 	display: inline-block;
 	background-color: white;
+}
+
+.table-heading {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
 }
 
 .table {

@@ -7,3 +7,7 @@ export function signInWithEmailPassword(email, pwd) {
 export function signInAnonymously() {
     return firebaseAuth.signInAnonymously();
 }
+
+export function signOut() {
+    return firebaseAuth.signOut();
+}
