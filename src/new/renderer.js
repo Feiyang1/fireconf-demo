@@ -52,7 +52,7 @@ export function renderTableHeading(title, user) {
 function renderAddTickerButton(container) {
     
     container.innerHTML = `
-        <div class="dropdown">
+        <div class="dropdown is-right">
             <div class="dropdown-trigger">
                 <div class="button" aria-haspopup="true" aria-controls="dropdown-menu">
                     <span>+ Add</span>
@@ -60,22 +60,9 @@ function renderAddTickerButton(container) {
             </div>
             <div class="dropdown-menu" id="dropdown-menu" role="menu">
                 <div class="dropdown-content">
-                    <a href="#" class="dropdown-item">
-                    Dropdown item
-                    </a>
-                    <a class="dropdown-item">
-                    Other dropdown item
-                    </a>
-                    <a href="#" class="dropdown-item is-active">
-                    Active dropdown item
-                    </a>
-                    <a href="#" class="dropdown-item">
-                    Other dropdown item
-                    </a>
-                    <hr class="dropdown-divider">
-                    <a href="#" class="dropdown-item">
-                    With a divider
-                    </a>
+                    <div class="search">
+                        GOOG
+                    </div>
                 </div>
             </div>
         </div>
