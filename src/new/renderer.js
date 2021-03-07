@@ -41,14 +41,56 @@ export function renderTableHeading(title, user) {
      * render the button to add stocks to the watchlist if we are rendering for a logged in user
      */
     if (user) {
-        const addToWatchListButton = document.createElement('button');
-        addToWatchListButton.textContent = '+ Add'
-
-        addToWatchListButton.addEventListener('click', () => console.log('display search dialog'));
-        containerEl.append(addToWatchListButton);
+        const addToWatchListButtonContainer = document.createElement('div');
+        renderAddTickerButton(addToWatchListButtonContainer);
+        containerEl.append(addToWatchListButtonContainer);
     }
 
     contentHomeEl.append(containerEl);
+}
+
+function renderAddTickerButton(container) {
+    
+    container.innerHTML = `
+        <div class="dropdown">
+            <div class="dropdown-trigger">
+                <div class="button" aria-haspopup="true" aria-controls="dropdown-menu">
+                    <span>+ Add</span>
+                </div>
+            </div>
+            <div class="dropdown-menu" id="dropdown-menu" role="menu">
+                <div class="dropdown-content">
+                    <a href="#" class="dropdown-item">
+                    Dropdown item
+                    </a>
+                    <a class="dropdown-item">
+                    Other dropdown item
+                    </a>
+                    <a href="#" class="dropdown-item is-active">
+                    Active dropdown item
+                    </a>
+                    <a href="#" class="dropdown-item">
+                    Other dropdown item
+                    </a>
+                    <hr class="dropdown-divider">
+                    <a href="#" class="dropdown-item">
+                    With a divider
+                    </a>
+                </div>
+            </div>
+        </div>
+    `;
+
+    const dropdownContainer = container.getElementsByClassName('dropdown')[0];
+    const trigger = container.getElementsByClassName('dropdown-trigger')[0];
+    trigger.addEventListener('click', () => {
+        console.log('clicked!');
+        if(dropdownContainer.classList.contains('is-active')) {
+            dropdownContainer.classList.remove('is-active');
+        } else {
+            dropdownContainer.classList.add('is-active');
+        }
+    })
 }
 
 export function renderTable(tableData) {

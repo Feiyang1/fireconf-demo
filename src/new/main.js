@@ -1,5 +1,6 @@
 import { renderLoginPage, renderUserPage } from './renderer';
 import { firebaseAuth, firestore } from './firebase';
+import './styles.scss';
 
 firebaseAuth.onAuthStateChanged(user => {
     if (user) {

@@ -1,5 +1,6 @@
 // const TerserPlugin = require("terser-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
   mode: "development",
@@ -25,6 +26,22 @@ module.exports = {
           ],
           plugins: ["@babel/plugin-syntax-dynamic-import"]
         }
+      },
+      {
+        test: /\.scss$/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          {
+            loader: 'css-loader'
+          },
+          {
+            loader: 'sass-loader',
+            options: {
+              sourceMap: true,
+              // options...
+            }
+          }
+        ]
       }
     ]
   },
@@ -40,8 +57,13 @@ module.exports = {
     watchContentBase: true,
     compress: true
   },
-  plugins: [new CopyPlugin([
+  plugins: [
+    new CopyPlugin([
       { from: `./src/new/index.html`, to: `./index.html` },
       { from: `./src/static/all.css`, to: `./all.css` },
-  ])]
+    ]),
+    new MiniCssExtractPlugin({
+      filename: 'css/mystyles.css'
+    }),
+  ]
 };
