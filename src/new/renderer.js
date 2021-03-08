@@ -1,4 +1,5 @@
 import { signInAnonymously, signOut } from './auth';
+import { search } from './stocks';
 
 const headerEl = document.getElementById("header");
 const contentHomeEl = document.getElementById("home");
@@ -61,15 +62,20 @@ function renderAddTickerButton(container) {
             <div class="dropdown-menu" id="dropdown-menu" role="menu">
                 <div class="dropdown-content">
                     <div class="search">
-                        GOOG
+                       <input class="search-input" type="text"/>
+                    </div>
+                    <div class="results">
                     </div>
                 </div>
             </div>
         </div>
     `;
 
-    const dropdownContainer = container.getElementsByClassName('dropdown')[0];
-    const trigger = container.getElementsByClassName('dropdown-trigger')[0];
+    const dropdownContainer = container.querySelector('.dropdown');
+    const trigger = container.querySelector('.dropdown-trigger');
+    const searchInput = container.querySelector('.search-input');
+    const searchResultsContainer = container.querySelector('.results');
+
     trigger.addEventListener('click', () => {
         console.log('clicked!');
         if(dropdownContainer.classList.contains('is-active')) {
@@ -77,7 +83,32 @@ function renderAddTickerButton(container) {
         } else {
             dropdownContainer.classList.add('is-active');
         }
-    })
+    });
+
+    // search
+    let cancelPrevious;
+    searchInput.addEventListener('keyup', () => {
+        clearTimeout(cancelPrevious);
+
+        // throttle inputs
+        cancelPrevious = setTimeout(async () => {
+            const searchResults = await search(searchInput.value);
+            searchResultsContainer.innerHTML = '';
+            renderSearchResults(searchResults, searchResultsContainer);
+        }, 1500);
+    });
+
+
+}
+
+function renderSearchResults(stocks, container) {
+    for(const stock of stocks) {
+        const stockRow = document.createElement('a');
+        stockRow.href = "#";
+        stockRow.className = "dropdown-item";
+        stockRow.innerText = stock;
+        container.append(stockRow);
+    }
 }
 
 export function renderTable(tableData) {
