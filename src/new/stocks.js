@@ -1,4 +1,4 @@
-import { firestore, FirestoreFieldValue } from './firebase';
+import { firestore, FirestoreFieldPath, FirestoreFieldValue } from './firebase';
 
 export async function search(input) {
     const tickers = await firestore.collection('current').get();
@@ -20,20 +20,45 @@ export function addToWatchList(ticker, user) {
     }, { merge: true });
 }
 
-export function subscribeToTickerChanges(callback) {
-    firestore
-    .collection(`current`)
-    .onSnapshot(snap => {
-        const stocks = formatSDKStocks(snap);
-        console
-        renderFn(stocks);
+export function subscribeToTickerChanges(user, callback) {
+
+    let unsubscribePrevTickerChanges;
+    const unsubscribe = firestore.collection('watchlist').doc(user.uid).onSnapshot(snapshot => {
+        const doc = snapshot.data();
+        const tickers = doc ? doc.tickers : [];
+
+        if (unsubscribePrevTickerChanges) {
+            unsubscribePrevTickerChanges();
+        }
+
+        if (tickers.length === 0) {
+            callback([]);
+        } else {
+            unsubscribePrevTickerChanges = firestore
+            .collection('current')
+            .where(FirestoreFieldPath.documentId(), 'in', tickers)
+            .onSnapshot(snapshot => {
+                const stocks = formatSDKStocks(snapshot);
+                callback(stocks);
+            });
+        }
     });
+    return unsubscribe;
+}
+
+export function subscribeToAllTickerChanges(callback) {
+    firestore
+        .collection('current')
+        .onSnapshot(snapshot => {
+            const stocks = formatSDKStocks(snapshot);
+            callback(stocks);
+        });
 }
 
 // Format stock data in Firestore format (returned from `onSnapshot()`)
-function formatSDKStocks(snap) {
+function formatSDKStocks(snapshot) {
     const stocks = [];
-    snap.forEach(docSnap => {
+    snapshot.forEach(docSnap => {
         if (!docSnap.data()) return;
         const symbol = docSnap.id;
         const {

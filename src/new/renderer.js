@@ -6,12 +6,12 @@ const headerEl = document.getElementById("header");
 const contentHomeEl = document.getElementById("home");
 
 
-export function renderUserPage(user) {
+export function renderUserPage(user, tableData) {
     headerEl.innerHTML = "";
     contentHomeEl.innerHTML = "";
     renderHeader('Personal page', user);
     renderTableHeading('Watchlist', user);
-    renderTable()
+    renderTable(tableData);
 }
 
 export function renderLoginPage(pageState) {
