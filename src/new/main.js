@@ -1,49 +1,24 @@
 import { renderLoginPage, renderUserPage } from './renderer';
-import { firebaseAuth, firestore } from './firebase';
+import { firebaseAuth } from './firebase';
 import './styles.scss';
+import { subscribeToTickerChanges } from './stocks';
+import { setUser } from './state';
 
 firebaseAuth.onAuthStateChanged(user => {
     if (user) {
+        // user page
         // TODO: data fetching
         console.log('hello', user);
         renderUserPage(user);
+        setUser(user);
     } else {
+        // login page
         renderLoginPage({ title: 'Landing page', tableData: [] });
-        subscribeToFirestore(stockData => {
+        subscribeToTickerChanges(stockData => {
             renderLoginPage(
                 { title: 'Landing page', tableData: stockData }
             )
         });
+        setUser(null);
     }
 });
-
-function subscribeToFirestore(renderFn) {
-        firestore
-        .collection(`current`)
-        .onSnapshot(snap => {
-            const stocks = formatSDKStocks(snap);
-            console
-            renderFn(stocks);
-        });
-}
-
-// Format stock data in Firestore format (returned from `onSnapshot()`)
-function formatSDKStocks(snap) {
-    const stocks = [];
-    snap.forEach(docSnap => {
-        if (!docSnap.data()) return;
-        const symbol = docSnap.id;
-        const {
-            closeValue,
-            delta,
-            timestamp
-        } = docSnap.data();
-        stocks.push({
-            symbol,
-            value: closeValue,
-            delta,
-            timestamp
-        });
-    });
-    return stocks;
-}

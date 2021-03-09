@@ -1,5 +1,6 @@
 import { signInAnonymously, signOut } from './auth';
-import { search } from './stocks';
+import { getState } from './state';
+import { addToWatchList, search } from './stocks';
 
 const headerEl = document.getElementById("header");
 const contentHomeEl = document.getElementById("home");
@@ -101,13 +102,21 @@ function renderAddTickerButton(container) {
 
 }
 
-function renderSearchResults(stocks, container) {
-    for(const stock of stocks) {
-        const stockRow = document.createElement('a');
-        stockRow.href = "#";
-        stockRow.className = "dropdown-item";
-        stockRow.innerText = stock;
-        container.append(stockRow);
+function renderSearchResults(tickers, container) {
+
+    const dropdownContainer = document.querySelector('.dropdown');
+    for(const ticker of tickers) {
+        const tickerRow = document.createElement('a');
+        tickerRow.href = "#";
+        tickerRow.className = "dropdown-item";
+        tickerRow.innerText = ticker;
+        container.append(tickerRow);
+
+        tickerRow.addEventListener('click', () => {
+            addToWatchList(ticker, getState().user);
+            // close dropdown
+            dropdownContainer.classList.remove('is-active');
+        });
     }
 }
 
