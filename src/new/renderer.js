@@ -1,6 +1,6 @@
 import { signInAnonymously, signOut } from './auth';
 import { getState } from './state';
-import { addToWatchList, search } from './stocks';
+import { addToWatchList, deleteFromWatchList, search } from './services';
 
 const headerEl = document.getElementById("header");
 const contentHomeEl = document.getElementById("home");
@@ -11,7 +11,7 @@ export function renderUserPage(user, tableData) {
     contentHomeEl.innerHTML = "";
     renderHeader('Personal page', user);
     renderTableHeading('Watchlist', user);
-    renderTable(tableData);
+    renderTable(tableData, user);
 }
 
 export function renderLoginPage(pageState) {
@@ -28,7 +28,8 @@ const HEADER_LABELS = [
     "change",
     "",
     "updated at",
-    "with data from"
+    "with data from",
+    ""
 ];
 
 export function renderTableHeading(title, user) {
@@ -120,7 +121,7 @@ function renderSearchResults(tickers, container) {
     }
 }
 
-export function renderTable(tableData) {
+export function renderTable(tableData, user) {
     const containerEl = document.createElement("div");
 
     if (tableData && tableData.length) {
@@ -135,13 +136,13 @@ export function renderTable(tableData) {
             headerRow.append(headerCell);
         });
         tableEl.append(headerRow);
-        tableData.forEach(rowData => renderRow(tableEl, rowData));
+        tableData.forEach(rowData => renderRow(tableEl, rowData, user));
         containerEl.append(tableEl);
     }
     contentHomeEl.append(containerEl);
 }
 
-export function renderRow(tableEl, rowData) {
+export function renderRow(tableEl, rowData, user) {
     const { symbol, value, delta, timestamp } = rowData;
     const changeClasses = ["cell"];
     if (delta > 0) {
@@ -186,6 +187,23 @@ export function renderRow(tableEl, rowData) {
     dateFromCell.className = "cell date-cell";
     dateFromCell.innerText = new Date(timestamp).toLocaleString();
     rowEl.append(dateFromCell);
+
+    if (user) {
+        const deleteCell = document.createElement('div');
+        deleteCell.className = 'cell delete-cell';
+    
+        const deleteIcon = document.createElement('div');
+        deleteIcon.className = 'delete-icon';
+        deleteIcon.innerText = 'X';
+
+        deleteCell.append(deleteIcon);
+        
+        deleteCell.addEventListener('click', () => {
+            deleteFromWatchList(symbol, user);
+        });
+
+        rowEl.append(deleteCell);
+    }
 
     tableEl.append(rowEl);
 }

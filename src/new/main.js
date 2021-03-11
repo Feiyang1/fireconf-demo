@@ -1,7 +1,7 @@
 import { renderLoginPage, renderUserPage } from './renderer';
 import { firebaseAuth } from './firebase';
 import './styles.scss';
-import { subscribeToAllTickerChanges, subscribeToTickerChanges } from './stocks';
+import { subscribeToAllTickerChanges, subscribeToTickerChanges } from './services';
 import { setUser } from './state';
 
 let unsubscribeTickerChanges;

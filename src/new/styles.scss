@@ -10,3 +10,19 @@
     outline: none;
     width: 100%;
 }
+
+.row {
+    .delete-cell .delete-icon {
+        visibility: hidden;
+    }
+}
+
+.row:hover {
+    .cell {
+        background-color: #fafafa;
+    }
+
+    .delete-cell .delete-icon {
+        visibility: visible;
+    }
+}

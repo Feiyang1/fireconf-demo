@@ -20,6 +20,12 @@ export function addToWatchList(ticker, user) {
     }, { merge: true });
 }
 
+export function deleteFromWatchList(ticker, user) {
+    return firestore.collection('watchlist').doc(user.uid).set({
+        tickers: FirestoreFieldValue.arrayRemove(ticker)
+    }, { merge: true });
+}
+
 export function subscribeToTickerChanges(user, callback) {
 
     let unsubscribePrevTickerChanges;
@@ -35,12 +41,12 @@ export function subscribeToTickerChanges(user, callback) {
             callback([]);
         } else {
             unsubscribePrevTickerChanges = firestore
-            .collection('current')
-            .where(FirestoreFieldPath.documentId(), 'in', tickers)
-            .onSnapshot(snapshot => {
-                const stocks = formatSDKStocks(snapshot);
-                callback(stocks);
-            });
+                .collection('current')
+                .where(FirestoreFieldPath.documentId(), 'in', tickers)
+                .onSnapshot(snapshot => {
+                    const stocks = formatSDKStocks(snapshot);
+                    callback(stocks);
+                });
         }
     });
     return unsubscribe;
