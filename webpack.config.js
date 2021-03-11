@@ -4,7 +4,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
   mode: "development",
-  entry: './src/new/main.js',
+  entry: './src/main.js',
   output: {
     filename: 'bundle.js'
   },
@@ -59,8 +59,7 @@ module.exports = {
   },
   plugins: [
     new CopyPlugin([
-      { from: `./src/new/index.html`, to: `./index.html` },
-      { from: `./src/static/all.css`, to: `./all.css` },
+      { from: `./src/index.html`, to: `./index.html` }
     ]),
     new MiniCssExtractPlugin({
       filename: 'css/mystyles.css'
