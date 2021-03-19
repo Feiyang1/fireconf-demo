@@ -1,9 +1,9 @@
 // const TerserPlugin = require("terser-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-
+const TerserPlugin = require('terser-webpack-plugin');
 module.exports = {
-  mode: "development",
+  mode: "production",
   entry: './src/main.js',
   output: {
     filename: 'bundle.js'
@@ -64,5 +64,17 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: 'css/mystyles.css'
     }),
-  ]
+  ],
+  optimization: {
+    minimizer: [
+      new TerserPlugin({
+        terserOptions: {
+          output: {
+            comments: false
+          }
+        }
+      })
+    ]
+  }
+
 };
