@@ -4,13 +4,9 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "watch": "webpack --watch",
-    "build": "webpack",
-    "start": "webpack-dev-server",
-    "click": "node scripts/click.js --latencyRange 0-500 --downloadSpeedRange 400-50000",
-    "demo2": "node scripts/launch.js --url https://exchange-rates-adcf6.firebaseapp.com/full https://exchange-rates-adcf6.firebaseapp.com/split --timeout 10000 --no-mobile",
-    "demo": "node scripts/launch.js --url https://exchange-rates-adcf6.firebaseapp.com/full https://exchange-rates-adcf6.firebaseapp.com/split https://exchange-rates-adcf6.firebaseapp.com/dynamic --timeout 5000 --no-mobile",
-    "demo:local": "node scripts/launch.js --url http://localhost:8080/full http://localhost:8080/split http://localhost:8080/dynamic --timeout 10000 --no-mobile"
+    "watch": "rollup -c -w",
+    "build": "rollup -c",
+    "start": "webpack-dev-server"
   },
   "author": "",
   "dependencies": {
@@ -22,19 +18,15 @@
     "@babel/core": "^7.2.2",
     "@babel/plugin-syntax-dynamic-import": "^7.2.0",
     "@babel/preset-env": "^7.3.1",
-    "babel-loader": "^8.0.5",
-    "babel-minify-webpack-plugin": "^0.3.1",
-    "compression-webpack-plugin": "^2.0.0",
-    "copy-webpack-plugin": "^5.0.4",
     "firebase-admin": "^8.4.0",
-    "puppeteer": "^1.19.0",
-    "uglifyjs-webpack-plugin": "^2.1.3",
-    "webpack": "^4.29.1",
-    "webpack-cli": "^3.2.3",
-    "webpack-dev-server": "^3.3.1",
-    "sass-loader": "10.0.5",
-    "css-loader": "5.1.1",
-    "mini-css-extract-plugin": "1.3.9",
-    "node-sass": "5.0.0"
+    "node-sass": "5.0.0",
+    "rollup": "2.35.1",
+    "@rollup/plugin-commonjs": "17.1.0",
+    "@rollup/plugin-node-resolve": "11.2.0",
+    "rollup-plugin-sourcemaps": "0.6.3",
+    "rollup-plugin-terser": "7.0.2",
+    "rollup-plugin-typescript2": "0.30.0",
+    "rollup-plugin-scss": "2.6.1",
+    "typescript": "4.2.3"
   }
 }
